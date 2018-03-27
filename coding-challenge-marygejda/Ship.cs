@@ -8,6 +8,7 @@
         private byte x;
         private byte y;
         private Orientation orientation;
+        private bool lost;
 
         /// <summary>
         /// Creates a ship object.
@@ -20,6 +21,7 @@
             this.x = x;
             this.y = y;
             this.orientation = orientation;
+            lost = false;
         }
 
         /// <summary>
@@ -86,6 +88,23 @@
         public void TurnLeft()
         {
             orientation = (Orientation)(((int)orientation + 3) % 4);
+        }
+
+        /// <summary>
+        /// Sets the lost value of the ship to true.
+        /// </summary>
+        public void BecomeLost()
+        {
+            lost = true;
+        }
+
+        /// <summary>
+        /// Returns true if the ship is lost, false otherwise.
+        /// </summary>
+        /// <returns>True if the ship is lost, false otherwise.</returns>
+        public bool IsLost()
+        {
+            return lost;
         }
     }
 
