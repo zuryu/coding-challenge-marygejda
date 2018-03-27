@@ -18,6 +18,7 @@ namespace coding_challenge_marygejda
             string[] mapXY = inputLines[0].Split(' ');
             Byte.TryParse(mapXY[0], out byte mapX);
             Byte.TryParse(mapXY[1], out byte mapY);
+            Map map = new Map(mapX, mapY);
 
             for (int i = 1; i < inputLines.Length; i += 2)
             {
@@ -41,14 +42,18 @@ namespace coding_challenge_marygejda
                 {
                     if (instruction == 'F')
                     {
-                        if (CanMoveForward(ship, mapX, mapY))
+                        if (map.CanMoveForward(ship))
                         {
                             ship.MoveForward();
                         }
                         else
                         {
-                            ship.BecomeLost();
-                            break;
+                            if (!map.IsMarkerSet(ship.GetX(), ship.GetY(), ship.GetOrientation()))
+                            {
+                                map.SetLostMarker(ship.GetX(), ship.GetY(), ship.GetOrientation());
+                                ship.BecomeLost();
+                                break;
+                            }
                         }
                     }
                     else if (instruction == 'R')
@@ -65,41 +70,10 @@ namespace coding_challenge_marygejda
                 Console.Write(ship.GetX() + " " + ship.GetY() + " " + ship.GetOrientation());
                 if (ship.IsLost())
                 {
-                    Console.WriteLine(" LOST");
+                    Console.Write(" LOST");
                 }
-                else
-                {
-                    Console.WriteLine("");
-                }
+                Console.WriteLine();
             }
-        }
-
-        /// <summary>
-        /// Checks if a ship can move forward without going off the edge of the map.
-        /// </summary>
-        /// <param name="ship">The ship to check.</param>
-        /// <param name="xMax">The maximum x size of the map.</param>
-        /// <param name="yMax">The maximum y size of the map.</param>
-        /// <returns>True if the ship can move forward without going off the map, false otherwise.</returns>
-        public static bool CanMoveForward(Ship ship, byte xMax, byte yMax)
-        {
-            if (ship.GetX() == 0 && ship.GetOrientation() == Orientation.W)
-            {
-                return false;
-            }
-            if (ship.GetX() == xMax && ship.GetOrientation() == Orientation.E)
-            {
-                return false;
-            }
-            if (ship.GetY() == 0 && ship.GetOrientation() == Orientation.S)
-            {
-                return false;
-            }
-            if (ship.GetY() == yMax && ship.GetOrientation() == Orientation.N)
-            {
-                return false;
-            }
-            return true;
         }
     }
 }

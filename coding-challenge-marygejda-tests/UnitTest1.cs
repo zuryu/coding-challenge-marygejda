@@ -122,5 +122,16 @@ namespace coding_challenge_marygejda_tests
                     break;
             }
         }
+
+        [Fact]
+        public void CanSetLostMarker()
+        {
+            Map map = new Map(10, 10);
+            Assert.False(map.IsMarkerSet(10, 10, Orientation.S));
+
+            map.SetLostMarker(10, 10, Orientation.S);
+
+            Assert.True(map.IsMarkerSet(10, 10, Orientation.S));
+        }
     }
 }
