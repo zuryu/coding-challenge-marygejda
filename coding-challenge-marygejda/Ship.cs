@@ -48,6 +48,45 @@
         {
             return orientation;
         }
+
+        /// <summary>
+        /// Moves the ship forward in the direction it is currently facing.
+        /// </summary>
+        public void MoveForward()
+        {
+            if (orientation == Orientation.N)
+            {
+                y++;
+            }
+            else if (orientation == Orientation.S)
+            {
+                y--;
+            }
+            else if (orientation == Orientation.E)
+            {
+                x++;
+            }
+            else if (orientation == Orientation.W)
+            {
+                x--;
+            }
+        }
+
+        /// <summary>
+        /// Turns the ship 90 degrees to the right.
+        /// </summary>
+        public void TurnRight()
+        {
+            orientation = (Orientation)(((int)orientation + 1) % 4);
+        }
+
+        /// <summary>
+        /// Turns the ship 90 degrees to the left.
+        /// </summary>
+        public void TurnLeft()
+        {
+            orientation = (Orientation)(((int)orientation + 3) % 4);
+        }
     }
 
     /// <summary>
